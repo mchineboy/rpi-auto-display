@@ -7,6 +7,7 @@ workflows:
           - "autodash-rpi"
 jobs:
   build:
+    docker: circleci/go:latest
     resource_class: mchineboy/auto-dash
     steps:
       - checkout
