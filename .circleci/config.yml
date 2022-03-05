@@ -10,14 +10,6 @@ jobs:
   build:
     executor: docker/docker
     steps:
-      - setup_remote_docker
-      - checkout
-      - docker/check
-      - docker/build:
-        image: mchineboy/auto-dash
-      - docker/push:
-        digest-path: /tmp/digest.txt
-        image: mchineboy/auto-dash
-      - run:
-        command: |
-          echo "Digest is $(</tmp/digest.txt)"
+      - docker/publish:
+        image: mchineboy007/auto-dash:latest
+        update-description: true
