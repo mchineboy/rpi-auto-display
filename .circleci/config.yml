@@ -2,14 +2,22 @@ version: 2.1
 orbs:
   docker: circleci/docker@2.0.2
 workflows:
-  build:
+  commit:
     jobs:
-      - build:
+      - build-and-push:
           context: autodash-rpi
 jobs:
-  build:
+  build-and-push:
     executor: docker/docker
     steps:
-      - docker/publish:
-        image: mchineboy007/auto-dash:latest
-        update-description: true
+      - setup_remote_docker
+      - checkout
+      - docker/check
+      - docker/build:
+          image: mchineboy007/auto-dash
+      - docker/push:
+          digest-path: /tmp/digest.txt
+          image: mchineboy007/auto-dash
+      - run:
+          command: |
+            echo "Digest is: $(</tmp/digest.txt)"
