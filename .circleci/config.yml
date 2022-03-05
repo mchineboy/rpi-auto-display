@@ -9,9 +9,6 @@ workflows:
 jobs:
   build:
     executor: docker/docker
-    docker:
-      - image: cimg/go:1.17.8
-    resource_class: mchineboy/auto-dash
     steps:
       - setup_remote_docker
       - checkout
