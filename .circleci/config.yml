@@ -5,17 +5,22 @@ workflows:
   build:
     jobs:
       - build:
-         context: autodash-rpi
+          context: autodash-rpi
 jobs:
   build:
+    executor: docker/docker
     docker:
       - image: cimg/go:1.17.8
     resource_class: mchineboy/auto-dash
     steps:
+      - setup_remote_docker
       - checkout
+      - docker/check
+      - docker/build:
+        image: mchineboy/auto-dash
+      - docker/push:
+        digest-path: /tmp/digest.txt
+        image: mchineboy/auto-dash
       - run:
-          name: "build docker image"
-          command: |
-            echo $DOCKER_PASSWORD | docker login -u $DOCKER_LOGIN --password-stdin 
-            docker build . -t mchineboy/auto-dash:latest 
-            docker push mchineboy007/auto-dash:latest
+        command: |
+          echo "Digest is $(</tmp/digest.txt)"
