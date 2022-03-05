@@ -4,7 +4,7 @@ workflows:
     jobs:
       - build:
         context:
-          - autodash-rpi
+          - "autodash-rpi"
 jobs:
   build:
     machine: true
@@ -14,5 +14,5 @@ jobs:
     steps:
       - checkout
       - run:
-        name: "build docker image"
-        command: echo $DOCKER_PASSWORD | docker login -u $DOCKER_LOGIN --password-stdin && docker build . -t mchineboy/auto-dash:latest && docker push mchineboy007/auto-dash:latest
+          name: "build docker image"
+          command: echo $DOCKER_PASSWORD | docker login -u $DOCKER_LOGIN --password-stdin && docker build . -t mchineboy/auto-dash:latest && docker push mchineboy007/auto-dash:latest
