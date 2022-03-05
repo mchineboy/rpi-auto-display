@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+  docker: circleci/docker@2.0.2
 workflows:
   testing:
     jobs:
