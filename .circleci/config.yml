@@ -9,10 +9,11 @@ jobs:
   build:
     machine: true
     resource_class: mchineboy/auto-dash
-    docker:
-      - image: mchineboy007/auto-dash:latest
     steps:
       - checkout
       - run:
           name: "build docker image"
-          command: echo $DOCKER_PASSWORD | docker login -u $DOCKER_LOGIN --password-stdin && docker build . -t mchineboy/auto-dash:latest && docker push mchineboy007/auto-dash:latest
+          command: |
+            echo $DOCKER_PASSWORD | docker login -u $DOCKER_LOGIN --password-stdin 
+            docker build . -t mchineboy/auto-dash:latest 
+            docker push mchineboy007/auto-dash:latest
