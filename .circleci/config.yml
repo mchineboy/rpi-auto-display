@@ -2,10 +2,13 @@ version: 2.1
 workflows:
   testing:
     jobs:
-      - runner
+      - build
 jobs:
-  runner:
+  build:
     machine: true
     resource_class: mchineboy/auto-dash
     steps:
-      - run: echo "Hi I'm on Runners!"
+      - checkout
+      - echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_LOGIN} --password-stdin
+      - docker build . -t mchineboy/auto-dash:latest
+      - docker push mchineboy007/auto-dash:latest
