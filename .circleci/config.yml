@@ -2,13 +2,15 @@ version: 2.1
 workflows:
   testing:
     jobs:
-      - build
+      - build:
+        context:
+          - autodash-rpi
 jobs:
   build:
     machine: true
     resource_class: mchineboy/auto-dash
     steps:
       - checkout
-      - echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_LOGIN} --password-stdin
+      - echo $DOCKER_PASSWORD | docker login -u $DOCKER_LOGIN --password-stdin
       - docker build . -t mchineboy/auto-dash:latest
       - docker push mchineboy007/auto-dash:latest
