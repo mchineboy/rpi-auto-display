@@ -1,6 +1,7 @@
 package auto_interface
 
 import (
+	"image/color"
 	"log"
 
 	"github.com/stianeikeland/go-rpio/v4"
@@ -39,4 +40,8 @@ func init() {
 func New() *AutoInterface {
 	AutoInt := &AutoInterface{Display: epd.New(rpio.Pin(17), rpio.Pin(25), rpio.Pin(8), ReadablePinPatch{rpio.Pin(24)}, rpio.SpiTransmit)}
 	return AutoInt
+}
+
+func (AutoInt *AutoInterface) ClearScreen() {
+	AutoInt.Display.Clear(color.White)
 }
