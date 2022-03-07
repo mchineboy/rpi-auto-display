@@ -9,6 +9,8 @@ workflows:
 jobs:
   build-and-push:
     resource_class: mchineboy/auto-dash
+    machine:
+      image: ubuntu-2004:202111-02
     steps:
       - setup_remote_docker
       - checkout
