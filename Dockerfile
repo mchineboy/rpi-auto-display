@@ -1,7 +1,15 @@
-FROM golang:latest
+FROM golang:latest AS STAGEONE
 
-RUN go build . -o autodash
+WORKDIR /usr/scratch
 
-COPY autodash /bin/autodash
+COPY . .
+
+RUN go build . 
+
+RUN ls -lh
+
+FROM scratch
+
+COPY --from=STAGEONE /usr/scratch/rpi-auto-dash /bin/autodash
 
 ENTRYPOINT [ "/bin/autodash" ]
