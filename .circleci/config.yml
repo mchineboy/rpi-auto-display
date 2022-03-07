@@ -9,6 +9,7 @@ workflows:
 jobs:
   build-and-push:
     executor: docker/docker
+    resource_class: mchineboy/auto-dash
     steps:
       - setup_remote_docker
       - checkout
