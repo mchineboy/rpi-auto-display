@@ -14,7 +14,7 @@ jobs:
       - checkout
       - run: |
           sudo apt update
-          sudo apt install docker
+          sudo apt -y install docker
           uname -a
           export PATH=/snap/bin:$PATH
           echo $DOCKER_PASSWORD | docker login -u $DOCKER_LOGIN --password-stdin 
