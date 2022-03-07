@@ -6,10 +6,8 @@ COPY . .
 
 RUN go build . 
 
-RUN ls -lh
-
 FROM scratch
 
-COPY --from=STAGEONE /usr/scratch/rpi-auto-dash /bin/autodash
+COPY --from=STAGEONE /usr/scratch/rpi-auto-display /bin/autodash
 
 ENTRYPOINT [ "/bin/autodash" ]
