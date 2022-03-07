@@ -1,6 +1,6 @@
 FROM golang:latest
 
-RUN go build src/. -o autodash
+RUN go build . -o autodash
 
 COPY autodash /bin/autodash
 
