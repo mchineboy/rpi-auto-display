@@ -3,7 +3,7 @@ orbs:
   docker: circleci/docker@2.0.2
 workflows:
   commit:
-    build-workflow:
+    jobs:
       - build-and-push:
           context: autodash-rpi
 jobs:
