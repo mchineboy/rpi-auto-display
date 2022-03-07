@@ -9,17 +9,10 @@ workflows:
 jobs:
   build-and-push:
     resource_class: mchineboy/auto-dash
-    machine:
-      image: ubuntu-2004:202111-02
+    machine: true
     steps:
-      - setup_remote_docker
       - checkout
-      - docker/check
-      - docker/build:
-          image: mchineboy007/auto-dash
-      - docker/push:
-          digest-path: /tmp/digest.txt
-          image: mchineboy007/auto-dash
-      - run:
-          command: |
-            echo "Digest is: $(</tmp/digest.txt)"
+      - run: |
+          echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin \
+          docker build -t mchineboy007/auto-dash:latest \
+          docker push mchineboy007/auto-dash:latest
