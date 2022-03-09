@@ -12,7 +12,7 @@ func (AutoInt *AutoInterface) DrawClock() {
 	AutoInt.Screen.SetColor(color.Black)
 	htime, wtime := AutoInt.Screen.MeasureString(time)
 	fmt.Printf("%f, %f\n", float64(AutoInt.Display.Height)-htime, float64(AutoInt.Display.Width)-wtime)
-	AutoInt.Screen.DrawString(time, float64(AutoInt.Display.Height)-htime, float64(AutoInt.Display.Width)-wtime)
+	AutoInt.Screen.DrawString(time, float64(AutoInt.Display.Height)-htime, float64(AutoInt.Display.Width)-wtime-8)
 	AutoInt.Screen.Stroke()
 	fmt.Printf("Update clock: %s\n", time)
 }
