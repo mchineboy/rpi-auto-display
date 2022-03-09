@@ -1,7 +1,6 @@
 package auto_interface
 
 import (
-	"fmt"
 	"image/color"
 	"log"
 	"time"
@@ -14,10 +13,10 @@ func (AutoInt *AutoInterface) DrawClock() {
 	time := currentTime.Format("Mon, Jan 2 15:04")
 	AutoInt.Screen.SetColor(color.Black)
 	wtime, htime := AutoInt.Screen.MeasureString(time)
-	log.Printf("%f, %f", wtime, htime)
+	log.Printf("width %f, height %f", wtime, htime)
 	AutoInt.Screen.Rotate(gg.Radians(90))
-	fmt.Printf("%f, %f\n", float64(AutoInt.Display.Height/2), float64(AutoInt.Display.Width/2))
-	AutoInt.Screen.DrawStringAnchored(time, float64(AutoInt.Display.Width/2), float64(AutoInt.Display.Height/2), .5, .5)
+	log.Printf("x: %f, y: %f\n", float64(AutoInt.Display.Height/2), float64(AutoInt.Display.Width/2))
+	AutoInt.Screen.DrawStringAnchored(time, float64(AutoInt.Display.Width)-wtime, htime-12, 0, 0)
 	AutoInt.Screen.Stroke()
 	log.Printf("Update clock: %s\n", time)
 }
