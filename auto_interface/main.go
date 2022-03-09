@@ -43,7 +43,7 @@ func init() {
 func New() *AutoInterface {
 	defer rpio.Close()
 	AutoInt := &AutoInterface{Display: epd.New(rpio.Pin(17), rpio.Pin(25), rpio.Pin(8), ReadablePinPatch{rpio.Pin(24)}, rpio.SpiTransmit)}
-	log.Printf("Width %d, Height %d\n", AutoInt.Display.Height, AutoInt.Display.Width)
+	log.Printf("Width %d, Height %d\n", AutoInt.Display.Width, AutoInt.Display.Height)
 	AutoInt.Display.Mode(epd.PartialUpdate)
 
 	ticker := time.NewTicker(2 * time.Second)
@@ -55,6 +55,7 @@ func New() *AutoInterface {
 			AutoInt.Screen.SetColor(color.White)
 			AutoInt.Screen.Clear()
 			AutoInt.DrawClock()
+			AutoInt.DrawX()
 			err := AutoInt.Display.Draw(AutoInt.Screen.Image())
 			if err != nil {
 				log.Printf("%+v\n", err)
