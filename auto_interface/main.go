@@ -55,17 +55,14 @@ func New() *AutoInterface {
 
 	defer ticker.Stop()
 
-	go func() {
-		for {
-			select {
-			case <-ticker.C:
-				AutoInt.DrawClock()
-				AutoInt.Display.Draw(AutoInt.Screen.Image())
-				AutoInt.Display.Sleep()
-			}
+	for {
+		select {
+		case <-ticker.C:
+			AutoInt.DrawClock()
+			AutoInt.Display.Draw(AutoInt.Screen.Image())
+			AutoInt.Display.Sleep()
 		}
-	}()
-	return AutoInt
+	}
 }
 
 func (AutoInt *AutoInterface) ClearScreen() {
