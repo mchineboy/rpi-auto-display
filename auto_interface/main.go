@@ -46,14 +46,11 @@ func New() *AutoInterface {
 	AutoInt := &AutoInterface{Display: epd.New(rpio.Pin(17), rpio.Pin(25), rpio.Pin(8), ReadablePinPatch{rpio.Pin(24)}, rpio.SpiTransmit)}
 	fmt.Printf("%d %d", AutoInt.Display.Height, AutoInt.Display.Width)
 	AutoInt.Display.Mode(epd.PartialUpdate)
-	AutoInt.Display.Clear(color.White)
 	AutoInt.Screen = gg.NewContext(AutoInt.Display.Width, AutoInt.Display.Height)
 	AutoInt.Screen.SetColor(color.White)
 	AutoInt.Screen.Clear()
 
 	ticker := time.NewTicker(5 * time.Second)
-
-	defer ticker.Stop()
 
 	for {
 		select {
@@ -61,9 +58,8 @@ func New() *AutoInterface {
 			AutoInt.DrawClock()
 			err := AutoInt.Display.Draw(AutoInt.Screen.Image())
 			if err != nil {
-				fmt.Printf("%_v\n", err)
+				fmt.Printf("%+v\n", err)
 			}
-			AutoInt.Display.Sleep()
 		}
 	}
 }
