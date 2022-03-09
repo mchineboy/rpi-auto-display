@@ -59,7 +59,10 @@ func New() *AutoInterface {
 		select {
 		case <-ticker.C:
 			AutoInt.DrawClock()
-			AutoInt.Display.Draw(AutoInt.Screen.Image())
+			err := AutoInt.Display.Draw(AutoInt.Screen.Image())
+			if err != nil {
+				fmt.Printf("%_v\n", err)
+			}
 			AutoInt.Display.Sleep()
 		}
 	}
