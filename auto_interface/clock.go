@@ -29,8 +29,9 @@ func (AutoInt *AutoInterface) DrawClock() {
 	log.Printf("width %f, height %f", wtime, htime)
 	AutoInt.Screen.Rotate(gg.Radians(90))
 	log.Printf("x: %f, y: %f\n", float64(AutoInt.Display.Width)-wtime, float64(AutoInt.Display.Height)-14)
-	AutoInt.Screen.DrawStringAnchored(time, float64(AutoInt.Display.Width)-wtime, float64(AutoInt.Display.Height)-14, 1.0, 1.0)
-	AutoInt.Screen.DrawStringAnchored(time, float64(currentTime.Second()), float64(currentTime.Second()), 0, 0)
+	log.Printf("x: %f, y: %f\n", float64(currentTime.Second()*2), float64(currentTime.Second()*2))
+	AutoInt.Screen.DrawStringAnchored(time, float64(AutoInt.Display.Height)-wtime, float64(AutoInt.Display.Width)-14, 0, 0)
+	AutoInt.Screen.DrawStringAnchored(time, float64(currentTime.Second()*2), float64(currentTime.Second()*2), 0, 0)
 	AutoInt.Screen.Stroke()
 	log.Printf("Update clock: %s\n", time)
 }
