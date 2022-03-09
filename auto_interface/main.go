@@ -66,5 +66,5 @@ func New() *AutoInterface {
 }
 
 func (AutoInt *AutoInterface) ClearScreen() {
-	AutoInt.Display.Clear(color.Opaque)
+	AutoInt.Display.Clear(color.White)
 }
