@@ -16,7 +16,7 @@ func (AutoInt *AutoInterface) DrawClock() {
 	wtime, htime := AutoInt.Screen.MeasureString(time)
 	AutoInt.Screen.Rotate(gg.Radians(90))
 	fmt.Printf("%f, %f\n", float64(AutoInt.Display.Height)-htime, float64(AutoInt.Display.Width)-wtime)
-	AutoInt.Screen.DrawString(time, float64(AutoInt.Display.Width)-wtime, float64(AutoInt.Display.Height)-htime-8)
+	AutoInt.Screen.DrawString(time, float64(AutoInt.Display.Width)-wtime-8, float64(AutoInt.Display.Height)-htime-8)
 	AutoInt.Screen.Stroke()
 	log.Printf("Update clock: %s\n", time)
 }
