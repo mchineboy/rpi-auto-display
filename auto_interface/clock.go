@@ -9,7 +9,7 @@ import (
 
 func (AutoInt *AutoInterface) DrawClock() {
 	currentTime := time.Now()
-	time := currentTime.Format("Mon Jan 2 15:04:05")
+	time := currentTime.Format("Jan 2 15:04")
 	AutoInt.Screen.SetColor(color.Black)
 	wtime, htime := AutoInt.Screen.MeasureString(time)
 	AutoInt.Screen.Rotate(90)
