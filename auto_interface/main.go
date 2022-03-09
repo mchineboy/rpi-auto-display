@@ -1,7 +1,6 @@
 package auto_interface
 
 import (
-	"fmt"
 	"image/color"
 	"log"
 	"time"
@@ -44,10 +43,10 @@ func init() {
 func New() *AutoInterface {
 	defer rpio.Close()
 	AutoInt := &AutoInterface{Display: epd.New(rpio.Pin(17), rpio.Pin(25), rpio.Pin(8), ReadablePinPatch{rpio.Pin(24)}, rpio.SpiTransmit)}
-	fmt.Printf("%d %d", AutoInt.Display.Height, AutoInt.Display.Width)
+	log.Printf("Width %d, Height %d\n", AutoInt.Display.Height, AutoInt.Display.Width)
 	AutoInt.Display.Mode(epd.PartialUpdate)
 
-	ticker := time.NewTicker(5 * time.Second)
+	ticker := time.NewTicker(1 * time.Second)
 
 	for {
 		select {
@@ -58,7 +57,7 @@ func New() *AutoInterface {
 			AutoInt.DrawClock()
 			err := AutoInt.Display.Draw(AutoInt.Screen.Image())
 			if err != nil {
-				fmt.Printf("%+v\n", err)
+				log.Printf("%+v\n", err)
 			}
 		}
 	}
