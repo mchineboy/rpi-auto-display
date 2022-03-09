@@ -46,7 +46,7 @@ func New() *AutoInterface {
 	log.Printf("Width %d, Height %d\n", AutoInt.Display.Height, AutoInt.Display.Width)
 	AutoInt.Display.Mode(epd.PartialUpdate)
 
-	ticker := time.NewTicker(1 * time.Second)
+	ticker := time.NewTicker(2 * time.Second)
 
 	for {
 		select {
