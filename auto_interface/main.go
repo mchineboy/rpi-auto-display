@@ -53,6 +53,8 @@ func New() *AutoInterface {
 
 	ticker := time.NewTicker(5 * time.Second)
 
+	defer ticker.Stop()
+
 	go func() {
 		for {
 			select {
