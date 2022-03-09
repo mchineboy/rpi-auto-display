@@ -51,7 +51,7 @@ func New() *AutoInterface {
 	AutoInt.Screen.SetColor(color.White)
 	AutoInt.Screen.Clear()
 
-	ticker := time.NewTicker(time.Second)
+	ticker := time.NewTicker(5 * time.Second)
 
 	go func() {
 		for {
