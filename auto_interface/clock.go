@@ -3,6 +3,7 @@ package auto_interface
 import (
 	"fmt"
 	"image/color"
+	"log"
 	"time"
 )
 
@@ -15,5 +16,5 @@ func (AutoInt *AutoInterface) DrawClock() {
 	fmt.Printf("%f, %f\n", float64(AutoInt.Display.Height)-htime, float64(AutoInt.Display.Width)-wtime)
 	AutoInt.Screen.DrawString(time, float64(AutoInt.Display.Width)-wtime, float64(AutoInt.Display.Height)-htime-8)
 	AutoInt.Screen.Stroke()
-	fmt.Printf("Update clock: %s\n", time)
+	log.Printf("Update clock: %s\n", time)
 }
