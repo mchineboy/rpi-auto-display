@@ -41,6 +41,8 @@ func init() {
 func New() *AutoInterface {
 	AutoInt := &AutoInterface{Display: epd.New(rpio.Pin(17), rpio.Pin(25), rpio.Pin(8), ReadablePinPatch{rpio.Pin(24)}, rpio.SpiTransmit)}
 	fmt.Printf("%d %d", AutoInt.Display.Height, AutoInt.Display.Width)
+	AutoInt.Display.Clear(color.White)
+
 	return AutoInt
 }
 
