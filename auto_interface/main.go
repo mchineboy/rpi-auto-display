@@ -4,13 +4,16 @@ import (
 	"fmt"
 	"image/color"
 	"log"
+	"time"
 
+	"github.com/fogleman/gg"
 	"github.com/stianeikeland/go-rpio/v4"
 	"go.riyazali.net/epd"
 )
 
 type AutoInterface struct {
 	Display *epd.EPD
+	Screen  *gg.Context
 }
 
 type ReadablePinPatch struct{ rpio.Pin }
@@ -39,14 +42,30 @@ func init() {
 }
 
 func New() *AutoInterface {
+	defer rpio.Close()
 	AutoInt := &AutoInterface{Display: epd.New(rpio.Pin(17), rpio.Pin(25), rpio.Pin(8), ReadablePinPatch{rpio.Pin(24)}, rpio.SpiTransmit)}
 	fmt.Printf("%d %d", AutoInt.Display.Height, AutoInt.Display.Width)
-	AutoInt.Display.Mode(epd.FullUpdate)
+	AutoInt.Display.Mode(epd.PartialUpdate)
 	AutoInt.Display.Clear(color.Black)
+	AutoInt.Screen = gg.NewContext(AutoInt.Display.Width, AutoInt.Display.Height)
+	AutoInt.Screen.SetColor(color.White)
+	AutoInt.Screen.Clear()
 
+	ticker := time.NewTicker(time.Second)
+
+	go func() {
+		for {
+			select {
+			case <-ticker.C:
+				AutoInt.DrawClock()
+				AutoInt.Display.Draw(AutoInt.Screen.Image())
+				AutoInt.Display.Sleep()
+			}
+		}
+	}()
 	return AutoInt
 }
 
 func (AutoInt *AutoInterface) ClearScreen() {
-	AutoInt.Display.Clear(color.White)
+	AutoInt.Display.Clear(color.Opaque)
 }
