@@ -1,6 +1,7 @@
 package auto_interface
 
 import (
+	"fmt"
 	"image/color"
 	"time"
 )
@@ -12,4 +13,5 @@ func (AutoInt *AutoInterface) DrawClock() {
 	htime, wtime := AutoInt.Screen.MeasureString(time)
 	AutoInt.Screen.DrawString(time, float64(AutoInt.Display.Height)-htime, float64(AutoInt.Display.Width)-wtime)
 	AutoInt.Screen.Stroke()
+	fmt.Printf("Update clock: %s", time)
 }
