@@ -4,7 +4,7 @@ WORKDIR /usr/scratch
 
 COPY . .
 
-RUN go build . 
+RUN CGO_ENABLED=0 go build . 
 
 FROM scratch
 
