@@ -19,5 +19,5 @@ jobs:
           docker push mchineboy007/auto-dash:latest
           docker container stop auto-dash
           docker system prune -f
-          docker container create --rm --device=/dev/mem --device=/dev/gpiomem --device=/dev/spidev0.0 --device=/dev/spidev0.1 --pull always --label auto-dash mchineboy007/auto-dash:latest 
+          docker container create --rm --device=/dev/mem --device=/dev/gpiomem --device=/dev/spidev0.0 --device=/dev/spidev0.1 --pull always --name auto-dash mchineboy007/auto-dash:latest 
           docker container start auto-dash
