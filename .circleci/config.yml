@@ -11,9 +11,6 @@ jobs:
     steps:
       - checkout
       - run: |
-          uname -a
-          pwd
-          ls
           echo $DOCKER_PASSWORD | docker login -u $DOCKER_LOGIN --password-stdin 
           docker build -t mchineboy007/auto-dash:latest .
           docker push mchineboy007/auto-dash:latest
