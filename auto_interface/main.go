@@ -62,6 +62,7 @@ func New(Agps *auto_gps.AutoGps) *AutoInterface {
 			AutoInt.Screen.Clear()
 			AutoInt.DrawClock()
 			AutoInt.DrawX()
+			AutoInt.DrawGPS()
 			err := AutoInt.Display.Draw(AutoInt.Screen.Image())
 			if err != nil {
 				log.Printf("%+v\n", err)
