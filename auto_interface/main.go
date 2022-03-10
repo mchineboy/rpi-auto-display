@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/fogleman/gg"
+	"github.com/mchineboy/rpi-auto-display/auto_gps"
 	"github.com/stianeikeland/go-rpio/v4"
 	"go.riyazali.net/epd"
 )
@@ -14,6 +15,7 @@ type AutoInterface struct {
 	Display  *epd.EPD
 	Screen   *gg.Context
 	TimeZone string
+	Agps     *auto_gps.AutoGps
 }
 
 type ReadablePinPatch struct{ rpio.Pin }
@@ -41,7 +43,7 @@ func init() {
 	rpio.Pin(24).Mode(rpio.Input)
 }
 
-func New() *AutoInterface {
+func New(Agps *auto_gps.AutoGps) *AutoInterface {
 	defer rpio.Close()
 	AutoInt := &AutoInterface{Display: epd.New(rpio.Pin(17), rpio.Pin(25), rpio.Pin(8), ReadablePinPatch{rpio.Pin(24)}, rpio.SpiTransmit)}
 	log.Printf("Width %d, Height %d\n", AutoInt.Display.Width, AutoInt.Display.Height)
@@ -49,6 +51,7 @@ func New() *AutoInterface {
 	AutoInt.Display.Mode(epd.FullUpdate)
 	AutoInt.ClearScreen()
 	AutoInt.Display.Mode(epd.PartialUpdate)
+	AutoInt.Agps = Agps
 	ticker := time.NewTicker(2 * time.Second)
 
 	for {
