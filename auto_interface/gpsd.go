@@ -8,6 +8,10 @@ import (
 	"github.com/fogleman/gg"
 )
 
+var signalMode = []string{
+	"unknown", "no fix", "2D", "3D",
+}
+
 func (AutoInt *AutoInterface) DrawGPS() {
 	gpsstring := fmt.Sprintf("Lat: %0.6f Lon: %0.6f Ele: %0.0f'", AutoInt.Agps.TPV.Lat, AutoInt.Agps.TPV.Lon, AutoInt.Agps.TPV.Alt*3.281)
 	log.Printf("%s\n", gpsstring)
@@ -17,5 +21,9 @@ func (AutoInt *AutoInterface) DrawGPS() {
 	AutoInt.Screen.DrawStringAnchored(gpsstring, (float64(AutoInt.Display.Height) - htime), -14, .95, 1)
 	AutoInt.Screen.Stroke()
 
+	signalstrength := signalMode[int(AutoInt.Agps.TPV.Mode)]
+
+	AutoInt.Screen.DrawStringAnchored(signalstrength, 0, float64((AutoInt.Display.Width)*-1), 0, 1)
+	AutoInt.Screen.Stroke()
 	AutoInt.Screen.Rotate(gg.Radians(0)) // Reset rotate once completed
 }
