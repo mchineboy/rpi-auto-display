@@ -8,7 +8,7 @@ import (
 )
 
 func (AutoInt *AutoInterface) DrawClock() {
-	currentTime := time.Now()
+	currentTime := time.Now().Local()
 	time := currentTime.Format("Mon, Jan 2 15:04")
 	AutoInt.Screen.SetColor(color.Black)
 
