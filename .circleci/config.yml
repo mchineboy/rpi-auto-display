@@ -17,5 +17,7 @@ jobs:
           echo $DOCKER_PASSWORD | docker login -u $DOCKER_LOGIN --password-stdin 
           docker build -t mchineboy007/auto-dash:latest .
           docker push mchineboy007/auto-dash:latest
+          docker container stop auto-dash
           docker system prune -f
-          docker create --rm --device=/dev/mem --device=/dev/gpiomem --device=/dev/spidev0.0 --device=/dev/spidev0.1 --pull always mchineboy007/auto-dash:latest 
+          docker container create --rm --device=/dev/mem --device=/dev/gpiomem --device=/dev/spidev0.0 --device=/dev/spidev0.1 --pull always --label auto-dash mchineboy007/auto-dash:latest 
+          docker container start auto-dash
