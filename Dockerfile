@@ -14,5 +14,6 @@ COPY --from=STAGEONE /usr/share/zoneinfo /usr/share/zoneinfo
 COPY --from=STAGEONE /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=STAGEONE /etc/passwd /etc/passwd
 COPY --from=STAGEONE /etc/group /etc/group
+COPY --from=STAGEONE /bin/sh /bin/sh
 
 ENTRYPOINT [ "/bin/autodash" ]
