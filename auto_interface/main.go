@@ -53,7 +53,6 @@ func New() *AutoInterface {
 		select {
 		case <-ticker.C:
 			AutoInt.Screen = gg.NewContext(AutoInt.Display.Width, AutoInt.Display.Height)
-			log.Printf("%+v", AutoInt.Screen)
 			AutoInt.Screen.SetColor(color.White)
 			AutoInt.Screen.Clear()
 			AutoInt.DrawClock()
