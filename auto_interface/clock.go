@@ -17,7 +17,7 @@ func (AutoInt *AutoInterface) DrawClock() {
 	_, htime := AutoInt.Screen.MeasureString(time)
 	AutoInt.Screen.Rotate(gg.Radians(90))
 	AutoInt.Screen.DrawStringAnchored(time, (float64(AutoInt.Display.Height) - htime),
-		float64((AutoInt.Display.Width)*-1), 0, 1)
+		float64((AutoInt.Display.Width)*-1), 1, 1)
 	AutoInt.Screen.Stroke()
 	AutoInt.Screen.Rotate(gg.Radians(0)) // Reset rotate once completed
 }
