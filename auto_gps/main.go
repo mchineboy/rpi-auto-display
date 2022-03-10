@@ -17,7 +17,7 @@ func New() *AutoGps {
 }
 
 func (Agps *AutoGps) Monitor() {
-	g, err := gpsd.Dial("locahost:2947")
+	g, err := gpsd.Dial("127.0.0.1:2947")
 	if err != nil {
 		panic(err)
 	}
