@@ -14,7 +14,7 @@ func (AutoInt *AutoInterface) DrawGPS() {
 	AutoInt.Screen.SetColor(color.Black)
 	AutoInt.Screen.Rotate(gg.Radians(90))
 	_, htime := AutoInt.Screen.MeasureString(gpsstring)
-	AutoInt.Screen.DrawStringAnchored(gpsstring, (float64(AutoInt.Display.Height) - htime), -14, .9, 0)
+	AutoInt.Screen.DrawStringAnchored(gpsstring, (float64(AutoInt.Display.Height) - htime), -14, .9, 1)
 	AutoInt.Screen.Stroke()
 
 	AutoInt.Screen.Rotate(gg.Radians(0)) // Reset rotate once completed
