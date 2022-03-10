@@ -9,7 +9,7 @@ import (
 
 func (AutoInt *AutoInterface) DrawClock() {
 
-	loc, _ := time.LoadLocation("America/Los Angeles")
+	loc, _ := time.LoadLocation("America/Los_Angeles")
 	currentTime := time.Now().In(loc)
 	time := currentTime.Format("Mon, Jan 2 15:04")
 	AutoInt.Screen.SetColor(color.Black)
