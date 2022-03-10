@@ -13,6 +13,8 @@ func (AutoInt *AutoInterface) DrawGPS() {
 	log.Printf("%s\n", gpsstring)
 	AutoInt.Screen.SetColor(color.Black)
 	AutoInt.Screen.Rotate(gg.Radians(90))
-	AutoInt.Screen.DrawStringAnchored(gpsstring, 0, -14, 0, 1)
+	AutoInt.Screen.DrawStringAnchored(gpsstring, 0, -14, .5, 1)
 	AutoInt.Screen.Stroke()
+
+	AutoInt.Screen.Rotate(gg.Radians(0)) // Reset rotate once completed
 }
