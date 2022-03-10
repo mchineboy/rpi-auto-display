@@ -10,6 +10,9 @@ FROM scratch
 
 COPY --from=STAGEONE /usr/scratch/rpi-auto-display /bin/autodash
 COPY --from=STAGEONE /etc/hosts /etc/hosts
+COPY --from=STAGEONE /usr/share/zoneinfo /usr/share/zoneinfo
+COPY --from=STAGEONE /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=STAGEONE /etc/passwd /etc/passwd
+COPY --from=STAGEONE /etc/group /etc/group
 
 ENTRYPOINT [ "/bin/autodash" ]
