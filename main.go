@@ -7,6 +7,6 @@ import (
 
 func main() {
 	Agps := auto_gps.New()
-	go Agps.Monitor()
+	go func() { Agps.Monitor() }()
 	_ = auto_interface.New(Agps)
 }
