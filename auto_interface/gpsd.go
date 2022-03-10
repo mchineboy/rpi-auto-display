@@ -9,7 +9,7 @@ import (
 )
 
 func (AutoInt *AutoInterface) DrawGPS() {
-	gpsstring := fmt.Sprintf("Lat: %0.4f Lon: %0.4f Ele: %0.4f", AutoInt.Agps.TPV.Lat, AutoInt.Agps.TPV.Lon, AutoInt.Agps.TPV.Alt)
+	gpsstring := fmt.Sprintf("Lat: %0.4f Lon: %0.4f Ele: %0.4ff", AutoInt.Agps.TPV.Lat, AutoInt.Agps.TPV.Lon, AutoInt.Agps.TPV.Alt*3.281)
 	log.Printf("%s\n", gpsstring)
 	AutoInt.Screen.SetColor(color.Black)
 	AutoInt.Screen.Rotate(gg.Radians(90))
