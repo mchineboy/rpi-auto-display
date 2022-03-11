@@ -1,18 +1,29 @@
 package auto_gps
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
+	"io/ioutil"
 
 	"github.com/amenzhinsky/go-gpsd"
 )
 
 type AutoGps struct {
-	TPV *gpsd.TPV
+	TPV    *gpsd.TPV
+	TzData map[string]interface{} 
 }
 
 func New() *AutoGps {
 	agps := &AutoGps{}
+	jsondata, err := ioutil.ReadFile("./data/index.json")
+	if err != nil {
+		panic(err)
+	}
+	err = json.Unmarshal(jsondata, &agps.TzData)
+	if err != nil {
+		panic(err)
+	}
 	return agps
 }
 

@@ -13,7 +13,7 @@ var signalMode = []string{
 }
 
 func (AutoInt *AutoInterface) DrawGPS() {
-	gpsstring := fmt.Sprintf("Lat: %0.6f Lon: %0.6f Ele: %0.0f'", AutoInt.Agps.TPV.Lat, AutoInt.Agps.TPV.Lon, AutoInt.Agps.TPV.Alt*3.281)
+	gpsstring := fmt.Sprintf("Lat: %0.4f Lon: %0.4f Ele: %0.0f'", AutoInt.Agps.TPV.Lat, AutoInt.Agps.TPV.Lon, AutoInt.Agps.TPV.Alt*3.281)
 	log.Printf("%s\n", gpsstring)
 	AutoInt.Screen.SetColor(color.Black)
 	//AutoInt.Screen.Rotate(gg.Radians(90))
@@ -21,7 +21,7 @@ func (AutoInt *AutoInterface) DrawGPS() {
 	AutoInt.Screen.DrawStringAnchored(gpsstring, (float64(AutoInt.Display.Height) - htime), -14, .95, 1)
 	AutoInt.Screen.Stroke()
 
-	signalstrength := signalMode[int(AutoInt.Agps.TPV.Mode)]
+	signalstrength := fmt.Sprintf("%s %0.1fx %0.1fy", signalMode[int(AutoInt.Agps.TPV.Mode)], AutoInt.Agps.TPV.Epx*3.281, AutoInt.Agps.TPV.Epy*3.281)
 
 	AutoInt.Screen.DrawStringAnchored(signalstrength, 0, float64((AutoInt.Display.Width)*-1), 0, 1)
 	AutoInt.Screen.Stroke()

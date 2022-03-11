@@ -52,7 +52,7 @@ func New(Agps *auto_gps.AutoGps) *AutoInterface {
 	AutoInt.ClearScreen()
 	AutoInt.Display.Mode(epd.PartialUpdate)
 	AutoInt.Agps = Agps
-	ticker := time.NewTicker(2 * time.Second)
+	ticker := time.NewTicker(3 * time.Second)
 
 	for {
 		select {
