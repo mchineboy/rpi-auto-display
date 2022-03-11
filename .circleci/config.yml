@@ -16,7 +16,7 @@ jobs:
           docker push mchineboy007/auto-dash:latest
           docker container stop auto-dash || echo "ok if not started"
           docker system prune -f
-          docker container create --rm --device=/dev/mem --device=/dev/gpiomem \
+          docker container create --device=/dev/mem --device=/dev/gpiomem \
             --device=/dev/spidev0.0 --device=/dev/spidev0.1 --privileged \
             --network=host --pull always --name auto-dash -e TZ=US/Pacific \
             --restart unless-stopped mchineboy007/auto-dash:latest 
