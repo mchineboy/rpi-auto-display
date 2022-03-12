@@ -16,7 +16,11 @@ type AutoGps struct {
 
 func New() *AutoGps {
 	agps := &AutoGps{}
-	agps.Spatial, _ = sql.Open("spatialite", "locations.sqlite3")
+	spatial, err := sql.Open("spatialite", "locations.sqlite3")
+	if err != nil {
+		panic(err)
+	}
+	agps.Spatial = spatial
 	agps.BuildDatabase()
 	return agps
 }
