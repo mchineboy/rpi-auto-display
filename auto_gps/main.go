@@ -16,7 +16,7 @@ type AutoGps struct {
 
 func New() *AutoGps {
 	agps := &AutoGps{}
-	spatial, err := sql.Open("spatialite", "locations.sqlite3")
+	spatial, err := sql.Open("spatialite", "/tmp/locations.sqlite3")
 	if err != nil {
 		panic(err)
 	}
