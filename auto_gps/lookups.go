@@ -47,7 +47,7 @@ func (Agps *AutoGps) FindNearestTowns(lat float64, lon float64) []string {
 			curresult = 1
 		}
 
-		log.Printf("%+v", location)
+		log.Printf("Row: %+v", location)
 		cities = append(cities, fmt.Sprintf("%s, %s %f", location.City, location.State, location.Distance))
 	}
 
