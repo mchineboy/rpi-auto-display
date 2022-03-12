@@ -33,7 +33,7 @@ func (Agps *AutoGps) FindNearestTowns(lat float64, lon float64) []string {
 	result, err := Agps.Spatial.QueryContext(ctx, sql, lat, lon)
 
 	if err != nil {
-		panic(err)
+		log.Printf("%+v", err)
 	}
 
 	curresult := 0
@@ -57,14 +57,14 @@ func (Agps *AutoGps) FindNearestTowns(lat float64, lon float64) []string {
 func (Agps *AutoGps) BuildDatabase() {
 	f, err := os.Open("/data/uscities.csv")
 	if err != nil {
-		panic(err)
+		log.Printf("%+v", err)
 	}
 	defer f.Close()
 	csvReader := csv.NewReader(f)
 	data, err := csvReader.ReadAll()
 
 	if err != nil {
-		log.Fatal(err)
+		log.Printf("%+v\n", err)
 	}
 	q := "SELECT InitSpatialMetaData(1);"
 	runQuery(Agps.Spatial, q)
@@ -87,7 +87,7 @@ func (Agps *AutoGps) BuildDatabase() {
 	})
 
 	if err != nil {
-		panic(err)
+		log.Printf("%+v", err)
 	}
 
 	sql := `insert into citylocations (city, state, tz, location) values ( ?, ?, ?, GeomFromText('POINT( ? ? )', 4326));`
@@ -95,7 +95,7 @@ func (Agps *AutoGps) BuildDatabase() {
 	query, err := tx.PrepareContext(ctx, sql)
 
 	if err != nil {
-		panic(err)
+		log.Printf("%+v", err)
 	}
 
 	for _, line := range data {
@@ -109,16 +109,16 @@ func (Agps *AutoGps) BuildDatabase() {
 func runQuery(db *sql.DB, query string) {
 	tx, err := db.Begin()
 	if err != nil {
-		log.Fatal(err)
+		log.Printf("%+v\n", err)
 	}
 	stmt, err := tx.Prepare(query)
 	if err != nil {
-		log.Fatal(err)
+		log.Printf("%+v\n", err)
 	}
 	defer stmt.Close()
 	_, err = stmt.Exec()
 	if err != nil {
-		log.Fatal(err)
+		log.Printf("%+v\n", err)
 	}
 	tx.Commit()
 }

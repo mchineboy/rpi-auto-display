@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"log"
 
 	"github.com/amenzhinsky/go-gpsd"
 	_ "github.com/briansorahan/spatialite"
@@ -19,7 +20,7 @@ func New() *AutoGps {
 	agps := &AutoGps{}
 	spatial, err := sql.Open("spatialite", "/tmp/locations.sqlite3")
 	if err != nil {
-		panic(err)
+		log.Printf("%+v", err)
 	}
 	agps.Spatial = spatial
 	agps.BuildDatabase()
@@ -29,12 +30,12 @@ func New() *AutoGps {
 func (Agps *AutoGps) Monitor() {
 	g, err := gpsd.Dial("127.0.0.1:2947")
 	if err != nil {
-		panic(err)
+		log.Printf("%+v", err)
 	}
 	defer g.Close()
 
 	if err := g.Stream(gpsd.WATCH_ENABLE|gpsd.WATCH_JSON, ""); err != nil {
-		panic(err)
+		log.Printf("%+v", err)
 	}
 	defer g.Stream(gpsd.WATCH_DISABLE, "")
 
@@ -44,7 +45,7 @@ func (Agps *AutoGps) Monitor() {
 			fmt.Printf("GPSD Version: %s, Proto: %.0f.%.0f\n", t.Release, t.ProtoMajor, t.ProtoMinor)
 		case *gpsd.DEVICES:
 			if len(t.Devices) == 0 {
-				panic(errors.New("no devices available"))
+				log.Printf("%+v", errors.New("no devices available"))
 			}
 			fmt.Println("Available devices:")
 			for _, d := range t.Devices {
