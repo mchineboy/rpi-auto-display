@@ -4,7 +4,7 @@ WORKDIR /usr/scratch
 RUN apk -U add sqlite libspatialite libspatialite-dev gcc musl-utils tzdata make binutils dev86 musl-dev
 COPY . .
 RUN chmod 777 -R /tmp && chmod o+t -R /tmp
-RUN go build -ldflags "-s" . 
+RUN go build -ldflags "-s -w" . 
 RUN ldd /usr/scratch/rpi-auto-display
 
 FROM scratch
