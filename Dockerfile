@@ -15,5 +15,6 @@ COPY --from=STAGEONE /etc/passwd /etc/passwd
 COPY --from=STAGEONE /etc/group /etc/group
 COPY --from=STAGEONE /bin/sh /bin/sh
 COPY --from=STAGEONE /usr/scratch/data /data
+RUN mkdir /tmp && chmod 777 -R /tmp && chmod o+t -R /tmp
 
 ENTRYPOINT [ "/bin/autodash" ]
