@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"github.com/amenzhinsky/go-gpsd"
+	_ "github.com/briansorahan/spatialite"
 )
 
 type AutoGps struct {
