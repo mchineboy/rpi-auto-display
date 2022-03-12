@@ -25,12 +25,12 @@ func (pin ReadablePinPatch) Read() uint8 { return uint8(pin.Pin.Read()) }
 func init() {
 	//start the GPIO controller
 	if err := rpio.Open(); err != nil {
-		log.Fatalf("[FATAL] failed to start gpio: %v", err)
+		log.Printf("[FATAL] failed to start gpio: %v", err)
 	}
 
 	// Enable SPI on SPI0
 	if err := rpio.SpiBegin(rpio.Spi0); err != nil {
-		log.Fatalf("[FATAL] failed to enable SPI: %v", err)
+		log.Printf("[FATAL] failed to enable SPI: %v", err)
 	}
 
 	// configure SPI settings
