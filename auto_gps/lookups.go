@@ -85,14 +85,8 @@ func (Agps *AutoGps) BuildDatabase() {
 
 	sql := `insert into citylocations (city, state, tz, location) values ( ?, ?, ?, GeomFromText('POINT( ? ? )', 4326));`
 
-	query, err := Agps.Spatial.Prepare(sql)
-
-	if err != nil {
-		log.Printf("Preparing: %+v", err)
-	}
-
 	for _, line := range data {
-		result, err := query.Exec(line[0], line[3], line[13], line[6], line[7])
+		result, err := Agps.Spatial.Exec(sql, line[0], line[3], line[13], line[6], line[7])
 		if err != nil {
 			log.Printf("Insert Location: %+v", err)
 		}
