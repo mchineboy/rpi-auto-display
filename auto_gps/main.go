@@ -1,6 +1,7 @@
 package auto_gps
 
 import (
+	"database/sql"
 	"errors"
 	"fmt"
 
@@ -8,12 +9,15 @@ import (
 )
 
 type AutoGps struct {
-	TPV    *gpsd.TPV
-	TzData map[string]interface{}
+	TPV     *gpsd.TPV
+	TzData  map[string]interface{}
+	Spatial *sql.DB
 }
 
 func New() *AutoGps {
 	agps := &AutoGps{}
+	agps.Spatial, _ = sql.Open("spatialite", "locations.sqlite3")
+	agps.BuildDatabase()
 	return agps
 }
 

@@ -25,5 +25,12 @@ func (AutoInt *AutoInterface) DrawGPS() {
 
 	AutoInt.Screen.DrawStringAnchored(signalstrength, 0, float64((AutoInt.Display.Width)*-1), 0, 1)
 	AutoInt.Screen.Stroke()
+
+	locations := AutoInt.Agps.FindNearestTowns(AutoInt.Agps.TPV.Lat, AutoInt.Agps.TPV.Lon)
+	for i, loc := range locations {
+		AutoInt.Screen.DrawStringAnchored(
+			loc, float64(AutoInt.Display.Height)/2, (float64(AutoInt.Display.Width-((i+2)*14)))*-1, .95, 1)
+
+	}
 	AutoInt.Screen.Rotate(gg.Radians(0)) // Reset rotate once completed
 }
