@@ -32,7 +32,7 @@ func (Agps *AutoGps) FindNearestTowns(lat float64, lon float64) []string {
 	result, err := Agps.Spatial.QueryContext(ctx, sql, lat, lon)
 
 	if err != nil {
-		log.Printf("%+v", err)
+		log.Printf("Get Locations: %+v", err)
 	}
 
 	curresult := 0
@@ -56,14 +56,14 @@ func (Agps *AutoGps) FindNearestTowns(lat float64, lon float64) []string {
 func (Agps *AutoGps) BuildDatabase() {
 	f, err := os.Open("/data/uscities.csv")
 	if err != nil {
-		log.Printf("%+v", err)
+		log.Printf("Open US Cities File: %+v", err)
 	}
 	defer f.Close()
 	csvReader := csv.NewReader(f)
 	data, err := csvReader.ReadAll()
 
 	if err != nil {
-		log.Printf("%+v\n", err)
+		log.Printf("CSV Reader: %+v\n", err)
 	}
 	q := "SELECT InitSpatialMetaData(1);"
 	Agps.Spatial.Exec(q)
@@ -76,26 +76,30 @@ func (Agps *AutoGps) BuildDatabase() {
 	}
 	for _, sql := range sqls {
 		log.Println(sql)
-		Agps.Spatial.Exec(sql)
+		result, err := Agps.Spatial.Exec(sql)
+		if err != nil {
+			log.Printf("Error executing %s : %+v", sql, err)
+		}
+		log.Printf("%+v", result)
 	}
-
-	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
-	defer cancel()
-
 	if err != nil {
-		log.Printf("%+v", err)
+		log.Printf("Setting Context: %+v", err)
 	}
 
 	sql := `insert into citylocations (city, state, tz, location) values ( ?, ?, ?, GeomFromText('POINT( ? ? )', 4326));`
 
-	query, err := Agps.Spatial.PrepareContext(ctx, sql)
+	query, err := Agps.Spatial.Prepare(sql)
 
 	if err != nil {
-		log.Printf("%+v", err)
+		log.Printf("Preparing Context: %+v", err)
 	}
 
 	for _, line := range data {
-		query.ExecContext(ctx, line[0], line[3], line[13], line[6], line[7])
+		result, err := query.Exec(line[0], line[3], line[13], line[6], line[7])
+		if err != nil {
+			log.Printf("Insert Location: %+v", err)
+		}
+		log.Printf("Result: %+v", result)
 	}
 
 	f.Close()
