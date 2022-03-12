@@ -10,7 +10,7 @@ import (
 
 type AutoGps struct {
 	TPV     *gpsd.TPV
-	TzData  map[string]interface{}
+	Tz      string
 	Spatial *sql.DB
 }
 

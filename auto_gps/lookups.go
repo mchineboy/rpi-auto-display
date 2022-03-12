@@ -36,9 +36,17 @@ func (Agps *AutoGps) FindNearestTowns(lat float64, lon float64) []string {
 		panic(err)
 	}
 
+	curresult := 0
+
 	for result.Next() {
 		var location Location = Location{}
 		result.Scan(&location)
+
+		if curresult == 0 {
+			Agps.Tz = location.Tz
+			curresult = 1
+		}
+
 		log.Printf("%+v", location)
 		cities = append(cities, fmt.Sprintf("%s, %s %f", location.City, location.State, location.Distance))
 	}
@@ -47,7 +55,7 @@ func (Agps *AutoGps) FindNearestTowns(lat float64, lon float64) []string {
 }
 
 func (Agps *AutoGps) BuildDatabase() {
-	f, err := os.Open("data/uscities.csv")
+	f, err := os.Open("/data/uscities.csv")
 	if err != nil {
 		panic(err)
 	}
