@@ -8,6 +8,7 @@ import (
 
 	"github.com/amenzhinsky/go-gpsd"
 	_ "github.com/briansorahan/spatialite"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 type AutoGps struct {

@@ -1,12 +1,10 @@
 package auto_gps
 
 import (
-	"context"
 	"encoding/csv"
 	"fmt"
 	"log"
 	"os"
-	"time"
 )
 
 type Location struct {
@@ -20,16 +18,13 @@ type Location struct {
 func (Agps *AutoGps) FindNearestTowns(lat float64, lon float64) []string {
 	var cities []string
 
-	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
-	defer cancel()
-
 	sql := `select city, state, tz, 
 		Distance(GeoFromText('POINT(?, ?)', 4326), location) as distance 
 		Azimuth(GeoFromText('POINT(?, ?)', 4326), location) as direction
 		from citylocations
 		order by distance asc limit 3`
 
-	result, err := Agps.Spatial.QueryContext(ctx, sql, lat, lon)
+	result, err := Agps.Spatial.Query(sql, lat, lon, lat, lon)
 
 	if err != nil {
 		log.Printf("Get Locations: %+v", err)
