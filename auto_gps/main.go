@@ -20,7 +20,7 @@ func New() *AutoGps {
 	agps := &AutoGps{}
 	spatial, err := sql.Open("spatialite", "/tmp/locations.sqlite3")
 	if err != nil {
-		log.Printf("%+v", err)
+		log.Printf("SQLite error? %+v", err)
 	}
 	agps.Spatial = spatial
 	agps.BuildDatabase()

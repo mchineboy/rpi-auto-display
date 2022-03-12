@@ -109,16 +109,16 @@ func (Agps *AutoGps) BuildDatabase() {
 func runQuery(db *sql.DB, query string) {
 	tx, err := db.Begin()
 	if err != nil {
-		log.Printf("%+v\n", err)
+		log.Printf("Begin Transaction: %+v\n", err)
 	}
 	stmt, err := tx.Prepare(query)
 	if err != nil {
-		log.Printf("%+v\n", err)
+		log.Printf("Prepare Query: %+v\n", err)
 	}
 	defer stmt.Close()
 	_, err = stmt.Exec()
 	if err != nil {
-		log.Printf("%+v\n", err)
+		log.Printf("Exec Transaction: %+v\n", err)
 	}
 	tx.Commit()
 }
