@@ -2,7 +2,6 @@ package auto_gps
 
 import (
 	"context"
-	"database/sql"
 	"encoding/csv"
 	"fmt"
 	"log"
@@ -67,7 +66,7 @@ func (Agps *AutoGps) BuildDatabase() {
 		log.Printf("%+v\n", err)
 	}
 	q := "SELECT InitSpatialMetaData(1);"
-	runQuery(Agps.Spatial, q)
+	Agps.Spatial.Exec(q)
 
 	sqls := []string{
 		"DROP TABLE IF EXISTS citylocations",
@@ -76,15 +75,12 @@ func (Agps *AutoGps) BuildDatabase() {
 		"SELECT CreateSpatialIndex('citylocations', 'location');",
 	}
 	for _, sql := range sqls {
-		runQuery(Agps.Spatial, sql)
+		log.Println(sql)
+		Agps.Spatial.Exec(sql)
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
-
-	tx, err := Agps.Spatial.BeginTx(ctx, &sql.TxOptions{
-		Isolation: sql.LevelLinearizable,
-	})
 
 	if err != nil {
 		log.Printf("%+v", err)
@@ -92,7 +88,7 @@ func (Agps *AutoGps) BuildDatabase() {
 
 	sql := `insert into citylocations (city, state, tz, location) values ( ?, ?, ?, GeomFromText('POINT( ? ? )', 4326));`
 
-	query, err := tx.PrepareContext(ctx, sql)
+	query, err := Agps.Spatial.PrepareContext(ctx, sql)
 
 	if err != nil {
 		log.Printf("%+v", err)
@@ -102,23 +98,5 @@ func (Agps *AutoGps) BuildDatabase() {
 		query.ExecContext(ctx, line[0], line[3], line[13], line[6], line[7])
 	}
 
-	tx.Commit()
 	f.Close()
-}
-
-func runQuery(db *sql.DB, query string) {
-	tx, err := db.Begin()
-	if err != nil {
-		log.Printf("Begin Transaction: %+v\n", err)
-	}
-	stmt, err := tx.Prepare(query)
-	if err != nil {
-		log.Printf("Prepare Query: %+v\n", err)
-	}
-	defer stmt.Close()
-	_, err = stmt.Exec()
-	if err != nil {
-		log.Printf("Exec Transaction: %+v\n", err)
-	}
-	tx.Commit()
 }
