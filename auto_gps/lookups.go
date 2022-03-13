@@ -128,7 +128,7 @@ func (Agps *AutoGps) BuildDatabase() {
 		sql := fmt.Sprintf(
 			`insert into citylocations (city, state, tz, location) values ( ?, ?, ?, GeomFromText('POINT(%f %f)', 4326));`,
 			lon, lat)
-		_, err := tx.ExecContext(ctx, sql, line[0], line[3], line[13])
+		_, err := tx.ExecContext(ctx, sql, line[0], line[2], line[13])
 
 		if err != nil {
 			log.Panicf("Error on Insert: %+v %+v", err, sql)
