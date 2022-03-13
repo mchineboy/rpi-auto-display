@@ -53,7 +53,7 @@ func New(Agps *auto_gps.AutoGps) *AutoInterface {
 	AutoInt.Display.Mode(epd.FullUpdate)
 	AutoInt.ClearScreen()
 	AutoInt.Display.Mode(epd.PartialUpdate)
-
+	AutoInt.LoadFonts()
 	AutoInt.Agps = Agps
 	ticker := time.NewTicker(3 * time.Second)
 
