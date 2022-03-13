@@ -19,8 +19,8 @@ func (Agps *AutoGps) FindNearestTowns(lat float64, lon float64) []string {
 	var cities []string
 
 	sql := `select city, state, tz, 
-		Distance(GeoFromText('POINT(?, ?)', 4326), location) as distance,
-		Azimuth(GeoFromText('POINT(?, ?)', 4326), location) as direction
+		Distance(GeomFromText('POINT(?, ?)', 4326), location) as distance,
+		Azimuth(GeomFromText('POINT(?, ?)', 4326), location) as direction
 		from citylocations
 		order by distance asc limit 3`
 
