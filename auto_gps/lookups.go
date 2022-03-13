@@ -21,7 +21,7 @@ func (Agps *AutoGps) FindNearestTowns(lat float64, lon float64) []string {
 	var cities []string
 	log.Printf("%0.3f, %0.3f", lon, lat)
 	sql := fmt.Sprintf(`select City, State, Tz, 
-		Distance(GeomFromText('POINT(%f %f)', 4326), location, 1) as Distance,
+		Distance(GeomFromText('POINT(%f %f)', 4326), location, 0) as Distance,
 		Azimuth(GeomFromText('POINT(%f %f)', 4326), location) as Direction
 		from citylocations
 		order by distance asc limit 3`, lon, lat, lon, lat)
@@ -50,8 +50,8 @@ func (Agps *AutoGps) FindNearestTowns(lat float64, lon float64) []string {
 		log.Printf("Row: %s %s %f %f",
 			city, state,
 			distance, direction)
-		cities = append(cities, fmt.Sprintf("%s, %s %f", city, state,
-			distance))
+		cities = append(cities, fmt.Sprintf("%s, %s %0.2f", city, state,
+			distance/1609))
 	}
 
 	return cities
