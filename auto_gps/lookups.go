@@ -103,7 +103,7 @@ func (Agps *AutoGps) BuildDatabase() {
 		_, err := tx.ExecContext(ctx, sql, line[0], line[3], line[13], lon, lat)
 
 		if err != nil {
-			log.Panicf("Error on Insert: %+v", err)
+			log.Panicf("Error on Insert: %+v %+v", err, line)
 		}
 
 	}
