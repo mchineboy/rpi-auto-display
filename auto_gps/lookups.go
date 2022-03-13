@@ -17,7 +17,7 @@ type Location struct {
 
 func (Agps *AutoGps) FindNearestTowns(lat float64, lon float64) []string {
 	var cities []string
-
+	log.Printf("%0.3f, %0.3f", lat, lon)
 	sql := `select city, state, tz, 
 		Distance(GeomFromText('POINT(?, ?)', 4326), location) as distance,
 		Azimuth(GeomFromText('POINT(?, ?)', 4326), location) as direction
