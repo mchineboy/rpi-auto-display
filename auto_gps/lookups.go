@@ -80,8 +80,6 @@ func (Agps *AutoGps) BuildDatabase() {
 		log.Printf("%+v", result)
 	}
 
-	sql := `insert into citylocations (city, state, tz, location) values ( ?, ?, ?, GeomFromText('POINT(? ?)', 4326));`
-
 	ctx := context.Background()
 
 	tx, _ := Agps.Spatial.BeginTx(ctx, nil)
@@ -100,10 +98,13 @@ func (Agps *AutoGps) BuildDatabase() {
 		lon, _ := strconv.ParseFloat(line[7], 64)
 		lat, _ := strconv.ParseFloat(line[6], 64)
 
-		_, err := tx.ExecContext(ctx, sql, line[0], line[3], line[13], lon, lat)
+		sql := fmt.Sprintf(
+			`insert into citylocations (city, state, tz, location) values ( ?, ?, ?, GeomFromText('POINT(%f %f)', 4326));`,
+			lon, lat)
+		_, err := tx.ExecContext(ctx, sql, line[0], line[3], line[13])
 
 		if err != nil {
-			log.Panicf("Error on Insert: %+v %+v", err, line)
+			log.Panicf("Error on Insert: %+v %+v", err, sql)
 		}
 
 	}
