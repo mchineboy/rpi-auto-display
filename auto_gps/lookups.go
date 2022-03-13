@@ -90,7 +90,7 @@ func (Agps *AutoGps) BuildDatabase() {
 	if err != nil {
 		log.Printf("Prepare: %+v", err)
 	}
-
+	defer sth.Close()
 	for i, line := range data {
 		if i%1000 == 0 {
 			log.Printf("%0d lines.. commit\n", i)
@@ -102,7 +102,7 @@ func (Agps *AutoGps) BuildDatabase() {
 		}
 
 	}
-
+	sth.Close()
 	tx.Commit()
 
 	result, err := Agps.Spatial.Exec(`vacuum; analyze;`)
