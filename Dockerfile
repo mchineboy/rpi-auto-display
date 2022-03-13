@@ -13,5 +13,6 @@ RUN GOOS=linux GOARCH=arm64 go build -v -ldflags "-s -w" --tags "sqlite_stat4 sq
 # COPY /etc/group /etc/group
 # COPY /bin/sh /bin/sh
 COPY data /data
+COPY fonts /fonts
 
 ENTRYPOINT [ "/usr/scratch/rpi-auto-display" ]
