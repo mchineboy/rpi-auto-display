@@ -1,6 +1,7 @@
 package auto_gps
 
 import (
+	"context"
 	"encoding/csv"
 	"fmt"
 	"log"
@@ -80,9 +81,11 @@ func (Agps *AutoGps) BuildDatabase() {
 
 	sql := `insert into citylocations (city, state, tz, location) values ( ?, ?, ?, MakePoint(?, ?));`
 
-	tx, _ := Agps.Spatial.Begin()
+	ctx := context.Background()
 
-	sth, err := tx.Prepare(sql)
+	tx, _ := Agps.Spatial.BeginTx(ctx, nil)
+
+	sth, err := tx.PrepareContext(ctx, sql)
 
 	if err != nil {
 		log.Printf("Prepare: %+v", err)
@@ -90,9 +93,14 @@ func (Agps *AutoGps) BuildDatabase() {
 
 	for i, line := range data {
 		if i%1000 == 0 {
-			log.Printf("%0d lines\n", i)
+			log.Printf("%0d lines.. commit\n", i)
+			tx.Commit()
 		}
-		sth.Exec(sql, line[0], line[3], line[13], line[7], line[6])
+		_, err := sth.ExecContext(ctx, sql, line[0], line[3], line[13], line[7], line[6])
+		if err != nil {
+			log.Printf("Error on Insert: %+v", err)
+		}
+
 	}
 
 	tx.Commit()
