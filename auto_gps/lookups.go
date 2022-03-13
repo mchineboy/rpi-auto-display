@@ -82,7 +82,11 @@ func (Agps *AutoGps) BuildDatabase() {
 
 	tx, _ := Agps.Spatial.Begin()
 
-	sth, _ := tx.Prepare(sql)
+	sth, err := tx.Prepare(sql)
+
+	if err != nil {
+		log.Printf("Prepare: %+v", err)
+	}
 
 	for i, line := range data {
 		if i%1000 == 0 {
@@ -92,6 +96,13 @@ func (Agps *AutoGps) BuildDatabase() {
 	}
 
 	tx.Commit()
+
+	result, err := Agps.Spatial.Exec(`vacuum; analyze;`)
+	if err != nil {
+		log.Printf("Vacuum Analyze: %+v", err)
+	}
+
+	log.Println(result.RowsAffected())
 
 	f.Close()
 }
