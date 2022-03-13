@@ -85,24 +85,21 @@ func (Agps *AutoGps) BuildDatabase() {
 
 	tx, _ := Agps.Spatial.BeginTx(ctx, nil)
 
-	sth, err := tx.PrepareContext(ctx, sql)
-
 	if err != nil {
 		log.Printf("Prepare: %+v", err)
 	}
-	defer sth.Close()
 	for i, line := range data {
 		if i%1000 == 0 {
 			log.Printf("%0d lines.. commit\n", i)
 			tx.Commit()
 		}
-		_, err := sth.ExecContext(ctx, sql, line[0], line[3], line[13], line[7], line[6])
+		_, err := tx.ExecContext(ctx, sql, line[0], line[3], line[13], line[7], line[6])
 		if err != nil {
 			log.Panicf("Error on Insert: %+v", err)
 		}
 
 	}
-	sth.Close()
+
 	tx.Commit()
 
 	result, err := Agps.Spatial.Exec(`vacuum; analyze;`)
