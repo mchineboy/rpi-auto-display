@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strconv"
 )
 
 type Location struct {
@@ -95,7 +96,12 @@ func (Agps *AutoGps) BuildDatabase() {
 		if i%1000 == 0 && i > 0 {
 			log.Printf("%0d lines..\n", i)
 		}
-		_, err := tx.ExecContext(ctx, sql, line[0], line[3], line[13], line[7], line[6])
+
+		lon, _ := strconv.ParseFloat(line[7], 64)
+		lat, _ := strconv.ParseFloat(line[6], 64)
+
+		_, err := tx.ExecContext(ctx, sql, line[0], line[3], line[13], lon, lat)
+
 		if err != nil {
 			log.Panicf("Error on Insert: %+v", err)
 		}
