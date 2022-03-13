@@ -89,6 +89,9 @@ func (Agps *AutoGps) BuildDatabase() {
 		log.Printf("Prepare: %+v", err)
 	}
 	for i, line := range data {
+		if i == 0 {
+			continue
+		}
 		if i%1000 == 0 && i > 0 {
 			log.Printf("%0d lines..\n", i)
 		}
