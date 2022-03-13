@@ -23,8 +23,13 @@ var fonts = []FontPack{
 	},
 	{
 		File:  "/fonts/race.ttf",
-		Sizes: []float64{10, 12, 14, 16, 36, 48},
+		Sizes: []float64{10, 11, 12, 14, 16, 36, 48},
 		Short: "race",
+	},
+	{
+		File:  "/fonts/roboto.ttf",
+		Sizes: []float64{10, 11, 12, 14, 16, 36, 48},
+		Short: "roboto",
 	},
 }
 
