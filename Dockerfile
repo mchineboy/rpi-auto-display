@@ -6,14 +6,14 @@ COPY . .
 RUN chmod 777 -R /tmp && chmod o+t -R /tmp
 RUN go build -ldflags "-s -w" . 
 
-COPY /usr/scratch/rpi-auto-display /bin/autodash
+COPY rpi-auto-display /bin/autodash
 # #COPY /usr/share/zoneinfo /usr/share/zoneinfo
 # COPY /lib/ld-musl-* /lib/
 # COPY /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 # COPY /etc/passwd /etc/passwd
 # COPY /etc/group /etc/group
 # COPY /bin/sh /bin/sh
-COPY /usr/scratch/data /data
+COPY data /data
 COPY /tmp /tmp
 
 ENTRYPOINT [ "/bin/autodash" ]
