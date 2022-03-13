@@ -55,18 +55,16 @@ func New(Agps *auto_gps.AutoGps) *AutoInterface {
 	ticker := time.NewTicker(3 * time.Second)
 
 	for {
-		select {
-		case <-ticker.C:
-			AutoInt.Screen = gg.NewContext(AutoInt.Display.Width, AutoInt.Display.Height)
-			AutoInt.Screen.SetColor(color.White)
-			AutoInt.Screen.Clear()
-			AutoInt.DrawClock()
-			AutoInt.DrawX()
-			AutoInt.DrawGPS()
-			err := AutoInt.Display.Draw(AutoInt.Screen.Image())
-			if err != nil {
-				log.Printf("%+v\n", err)
-			}
+		<-ticker.C
+		AutoInt.Screen = gg.NewContext(AutoInt.Display.Width, AutoInt.Display.Height)
+		AutoInt.Screen.SetColor(color.White)
+		AutoInt.Screen.Clear()
+		AutoInt.DrawClock()
+		AutoInt.DrawX()
+		AutoInt.DrawGPS()
+		err := AutoInt.Display.Draw(AutoInt.Screen.Image())
+		if err != nil {
+			log.Printf("%+v\n", err)
 		}
 	}
 }
