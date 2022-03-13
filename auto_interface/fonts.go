@@ -40,7 +40,7 @@ func (AutoInt *AutoInterface) LoadFonts() {
 			panic(err)
 		}
 		for _, size := range font.Sizes {
-			AutoInt.Fonts[fmt.Sprintf("%s-%f", font.Short, size)] = truetype.NewFace(ff, &truetype.Options{
+			AutoInt.Fonts[fmt.Sprintf("%s-%df", font.Short, int(size))] = truetype.NewFace(ff, &truetype.Options{
 				Size: size,
 			})
 			log.Printf("%+v", AutoInt.Fonts)
