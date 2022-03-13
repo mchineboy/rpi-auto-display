@@ -1,0 +1,45 @@
+package auto_interface
+
+import (
+	"fmt"
+	"os"
+
+	"github.com/golang/freetype/truetype"
+)
+
+type FontPack struct {
+	File  string
+	Sizes []float64
+	Short string
+}
+
+var fonts = []FontPack{
+	{
+		File:  "/fonts/digital.ttf",
+		Sizes: []float64{10, 12, 14, 16, 36, 48},
+		Short: "digital",
+	},
+	{
+		File:  "/fonts/race.ttf",
+		Sizes: []float64{10, 12, 14, 16, 36, 48},
+		Short: "race",
+	},
+}
+
+func (AutoInt *AutoInterface) LoadFonts() {
+	for _, font := range fonts {
+		file, err := os.ReadFile(font.File)
+		if err != nil {
+			panic(err)
+		}
+		ff, err := truetype.Parse(file)
+		if err != nil {
+			panic(err)
+		}
+		for _, size := range font.Sizes {
+			AutoInt.Fonts[fmt.Sprintf("%s-%f", font.Short, size)] = truetype.NewFace(ff, &truetype.Options{
+				Size: size,
+			})
+		}
+	}
+}

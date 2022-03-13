@@ -9,6 +9,7 @@ import (
 	"github.com/mchineboy/rpi-auto-display/auto_gps"
 	"github.com/stianeikeland/go-rpio/v4"
 	"go.riyazali.net/epd"
+	"golang.org/x/image/font"
 )
 
 type AutoInterface struct {
@@ -16,6 +17,7 @@ type AutoInterface struct {
 	Screen   *gg.Context
 	TimeZone string
 	Agps     *auto_gps.AutoGps
+	Fonts    map[string]font.Face
 }
 
 type ReadablePinPatch struct{ rpio.Pin }
@@ -51,6 +53,7 @@ func New(Agps *auto_gps.AutoGps) *AutoInterface {
 	AutoInt.Display.Mode(epd.FullUpdate)
 	AutoInt.ClearScreen()
 	AutoInt.Display.Mode(epd.PartialUpdate)
+
 	AutoInt.Agps = Agps
 	ticker := time.NewTicker(3 * time.Second)
 

@@ -13,6 +13,8 @@ var signalMode = []string{
 }
 
 func (AutoInt *AutoInterface) DrawGPS() {
+
+	AutoInt.Screen.SetFontFace(AutoInt.Fonts["race-10"])
 	gpsstring := fmt.Sprintf("Lat: %0.4f Lon: %0.4f Ele: %0.0f'", AutoInt.Agps.TPV.Lat, AutoInt.Agps.TPV.Lon, AutoInt.Agps.TPV.Alt*3.281)
 	log.Printf("%s\n", gpsstring)
 	AutoInt.Screen.SetColor(color.Black)
@@ -29,7 +31,7 @@ func (AutoInt *AutoInterface) DrawGPS() {
 	locations := AutoInt.Agps.FindNearestTowns(AutoInt.Agps.TPV.Lat, AutoInt.Agps.TPV.Lon)
 	for i, loc := range locations {
 		AutoInt.Screen.DrawStringAnchored(
-			loc, float64(AutoInt.Display.Height)/2, (float64(AutoInt.Display.Width-((i+2)*14)))*-1, .95, 1)
+			loc, float64(AutoInt.Display.Height)/2, (float64(AutoInt.Display.Width-((i+2)*14)))*-1, 0, 1)
 
 	}
 	AutoInt.Screen.Rotate(gg.Radians(0)) // Reset rotate once completed
