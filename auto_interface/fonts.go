@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/golang/freetype/truetype"
+	"golang.org/x/image/font"
 )
 
 type FontPack struct {
@@ -27,6 +28,7 @@ var fonts = []FontPack{
 }
 
 func (AutoInt *AutoInterface) LoadFonts() {
+	AutoInt.Fonts = map[string]font.Face{}
 	for _, font := range fonts {
 		file, err := os.ReadFile(font.File)
 		if err != nil {
