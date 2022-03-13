@@ -20,9 +20,9 @@ type Location struct {
 func (Agps *AutoGps) FindNearestTowns(lat float64, lon float64) []string {
 	var cities []string
 	log.Printf("%0.3f, %0.3f", lon, lat)
-	sql := fmt.Sprintf(`select city, state, tz, 
-		Distance(GeomFromText('POINT(%f %f)', 4326), location, 1) as distance,
-		Azimuth(GeomFromText('POINT(%f %f)', 4326), location) as direction
+	sql := fmt.Sprintf(`select City, State, Tz, 
+		Distance(GeomFromText('POINT(%f %f)', 4326), location, 1) as Distance,
+		Azimuth(GeomFromText('POINT(%f %f)', 4326), location) as Direction
 		from citylocations
 		order by distance asc limit 3`, lon, lat, lon, lat)
 
@@ -35,19 +35,19 @@ func (Agps *AutoGps) FindNearestTowns(lat float64, lon float64) []string {
 	curresult := 0
 
 	for result.Next() {
-		location := map[string]interface{}{}
+		location := Location{}
 		result.Scan(&location)
 
 		if curresult == 0 {
-			Agps.Tz = fmt.Sprintf("%s", location["tz"])
+			Agps.Tz = location.Tz
 			curresult = 1
 		}
 
 		log.Printf("Row: %s %s %f %f",
-			location["city"], location["state"],
-			location["distance"], location["direction"])
-		cities = append(cities, fmt.Sprintf("%s, %s %f", location["city"], location["state"],
-			location["distance"]))
+			location.City, location.State,
+			location.Distance, location.Direction)
+		cities = append(cities, fmt.Sprintf("%s, %s %f", location.City, location.State,
+			location.Distance))
 	}
 
 	return cities
