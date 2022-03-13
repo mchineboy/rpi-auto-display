@@ -14,6 +14,5 @@ COPY rpi-auto-display /bin/autodash
 # COPY /etc/group /etc/group
 # COPY /bin/sh /bin/sh
 COPY data /data
-COPY /tmp /tmp
 
 ENTRYPOINT [ "/bin/autodash" ]
