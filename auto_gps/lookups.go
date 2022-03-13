@@ -35,19 +35,23 @@ func (Agps *AutoGps) FindNearestTowns(lat float64, lon float64) []string {
 	curresult := 0
 
 	for result.Next() {
-		location := Location{}
-		result.Scan(&location)
+		var city string
+		var state string
+		var tz string
+		var distance float64
+		var direction float64
+		result.Scan(&city, &state, &tz, &distance, &direction)
 
 		if curresult == 0 {
-			Agps.Tz = location.Tz
+			Agps.Tz = tz
 			curresult = 1
 		}
 
 		log.Printf("Row: %s %s %f %f",
-			location.City, location.State,
-			location.Distance, location.Direction)
-		cities = append(cities, fmt.Sprintf("%s, %s %f", location.City, location.State,
-			location.Distance))
+			city, state,
+			distance, direction)
+		cities = append(cities, fmt.Sprintf("%s, %s %f", city, state,
+			distance))
 	}
 
 	return cities
