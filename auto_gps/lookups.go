@@ -17,14 +17,14 @@ type Location struct {
 
 func (Agps *AutoGps) FindNearestTowns(lat float64, lon float64) []string {
 	var cities []string
-	log.Printf("%0.3f, %0.3f", lat, lon)
+	log.Printf("%0.3f, %0.3f", lon, lat)
 	sql := `select city, state, tz, 
-		Distance(GeomFromText('POINT(?, ?)', 4326), location) as distance,
-		Azimuth(GeomFromText('POINT(?, ?)', 4326), location) as direction
+		Distance(MakePoint(?, ?), location, 1) as distance,
+		Azimuth(MakePoint(?, ?), location) as direction
 		from citylocations
 		order by distance asc limit 3`
 
-	result, err := Agps.Spatial.Query(sql, lat, lon, lat, lon)
+	result, err := Agps.Spatial.Query(sql, lon, lat, lon, lat)
 
 	if err != nil {
 		log.Printf("Get Locations: %+v", err)
@@ -78,7 +78,7 @@ func (Agps *AutoGps) BuildDatabase() {
 		log.Printf("%+v", result)
 	}
 
-	sql := `insert into citylocations (city, state, tz, location) values ( ?, ?, ?, GeomFromText('POINT( ? ? )', 4326));`
+	sql := `insert into citylocations (city, state, tz, location) values ( ?, ?, ?, MakePoint(?, ?));`
 
 	tx, _ := Agps.Spatial.Begin()
 
@@ -92,7 +92,7 @@ func (Agps *AutoGps) BuildDatabase() {
 		if i%1000 == 0 {
 			log.Printf("%0d lines\n", i)
 		}
-		sth.Exec(sql, line[0], line[3], line[13], line[6], line[7])
+		sth.Exec(sql, line[0], line[3], line[13], line[7], line[6])
 	}
 
 	tx.Commit()
