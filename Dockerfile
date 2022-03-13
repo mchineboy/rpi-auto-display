@@ -6,7 +6,6 @@ COPY . .
 RUN chmod 777 -R /tmp && chmod o+t -R /tmp
 RUN GOOS=linux GOARCH=arm64 go build -ldflags "-s -w" . 
 
-COPY rpi-auto-display /bin/autodash
 # #COPY /usr/share/zoneinfo /usr/share/zoneinfo
 # COPY /lib/ld-musl-* /lib/
 # COPY /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
@@ -15,4 +14,4 @@ COPY rpi-auto-display /bin/autodash
 # COPY /bin/sh /bin/sh
 COPY data /data
 
-ENTRYPOINT [ "/bin/autodash" ]
+ENTRYPOINT [ "/usr/scratch/rpi-auto-display" ]
