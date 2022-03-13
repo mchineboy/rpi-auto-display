@@ -65,7 +65,7 @@ func (Agps *AutoGps) BuildDatabase() {
 	Agps.Spatial.Exec(q)
 
 	sqls := []string{
-		"DROP TABLE IF EXISTS citylocations",
+		"SELECT DropGeoTable('citylocations')",
 		"CREATE TABLE citylocations (id INTEGER PRIMARY KEY AUTOINCREMENT, city text, state text, tz text);",
 		"SELECT AddGeometryColumn('citylocations', 'location', 4326, 'POINT', 'XY', 0);",
 		"SELECT CreateSpatialIndex('citylocations', 'location');",
