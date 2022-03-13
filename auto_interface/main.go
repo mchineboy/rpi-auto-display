@@ -17,7 +17,7 @@ type AutoInterface struct {
 	Screen   *gg.Context
 	TimeZone string
 	Agps     *auto_gps.AutoGps
-	Fonts    map[string]*font.Face
+	Fonts    map[string]font.Face
 }
 
 type ReadablePinPatch struct{ rpio.Pin }
