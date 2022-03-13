@@ -5,6 +5,7 @@ import (
 	"encoding/csv"
 	"fmt"
 	"log"
+	"math"
 	"os"
 	"strconv"
 )
@@ -42,16 +43,38 @@ func (Agps *AutoGps) FindNearestTowns(lat float64, lon float64) []string {
 		var direction float64
 		result.Scan(&city, &state, &tz, &distance, &direction)
 
+		direction = direction * 180 / math.Pi
+		compass := ""
+		switch {
+		case direction <= 22.5:
+			compass = "N"
+		case direction < 67.5:
+			compass = "NE"
+		case direction <= 112.5:
+			compass = "E"
+		case direction < 157.5:
+			compass = "SE"
+		case direction <= 202.5:
+			compass = "S"
+		case direction < 247.5:
+			compass = "SW"
+		case direction <= 292.5:
+			compass = "W"
+		case direction <= 337.5:
+			compass = "NW"
+		default:
+			compass = "N"
+		}
 		if curresult == 0 {
 			Agps.Tz = tz
 			curresult = 1
 		}
 
-		log.Printf("Row: %s %s %f %f",
+		log.Printf("Row: %s %s %f %s",
 			city, state,
-			distance, direction)
-		cities = append(cities, fmt.Sprintf("%s, %s %0.2f", city, state,
-			distance/1609))
+			distance, compass)
+		cities = append(cities, fmt.Sprintf("%s, %s %0.2f %s", city, state,
+			distance/1609, compass))
 	}
 
 	return cities
