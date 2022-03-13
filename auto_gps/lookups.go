@@ -67,7 +67,7 @@ func (Agps *AutoGps) BuildDatabase() {
 	sqls := []string{
 		"SELECT DropGeoTable('citylocations')",
 		"CREATE TABLE citylocations (id INTEGER PRIMARY KEY AUTOINCREMENT, city text, state text, tz text);",
-		"SELECT AddGeometryColumn('citylocations', 'location', 4326, 'POINT', 'XY', 0);",
+		"SELECT AddGeometryColumn('citylocations', 'location', 4326, 'POINT', 'XY', 1);",
 		"SELECT CreateSpatialIndex('citylocations', 'location');",
 	}
 	for _, sql := range sqls {
