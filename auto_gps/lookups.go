@@ -80,7 +80,10 @@ func (Agps *AutoGps) BuildDatabase() {
 
 	sql := `insert into citylocations (city, state, tz, location) values ( ?, ?, ?, GeomFromText('POINT( ? ? )', 4326));`
 
-	for _, line := range data {
+	for i, line := range data {
+		if i%1000 == 0 {
+			log.Printf("%0d lines\n", i)
+		}
 		Agps.Spatial.Exec(sql, line[0], line[3], line[13], line[6], line[7])
 	}
 
