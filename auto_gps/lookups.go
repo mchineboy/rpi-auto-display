@@ -21,8 +21,8 @@ func (Agps *AutoGps) FindNearestTowns(lat float64, lon float64) []string {
 	var cities []string
 	log.Printf("%0.3f, %0.3f", lon, lat)
 	sql := `select city, state, tz, 
-		Distance(MakePoint(?, ?), location, 1) as distance,
-		Azimuth(MakePoint(?, ?), location) as direction
+		Distance(geomfromtext('POINT(? ?)', 4326), location, 1) as distance,
+		Azimuth(geomfromtext('POINT(? ?)', 4326), location) as direction
 		from citylocations
 		order by distance asc limit 3`
 
@@ -80,7 +80,7 @@ func (Agps *AutoGps) BuildDatabase() {
 		log.Printf("%+v", result)
 	}
 
-	sql := `insert into citylocations (city, state, tz, location) values ( ?, ?, ?, MakePoint(?, ?));`
+	sql := `insert into citylocations (city, state, tz, location) values ( ?, ?, ?, geomfromtext('POINT(? ?)', 4326));`
 
 	ctx := context.Background()
 
