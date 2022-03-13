@@ -1,7 +1,8 @@
 FROM golang:alpine AS STAGEONE
 
 WORKDIR /usr/scratch
-RUN apk -U add sqlite libspatialite libspatialite-dev gcc musl-utils tzdata make binutils dev86 musl-dev
+RUN apk -U --no-cache add libsqlite libspatialite 
+RUN apk -U --no-cache --virtual .build-dependencies libspatialite-dev gcc musl-utils tzdata make binutils dev86 musl-dev
 COPY . .
 RUN chmod 777 -R /tmp && chmod o+t -R /tmp
 RUN GOOS=linux GOARCH=arm64 go build -v -ldflags "-s -w" --tags "sqlite_stat4 sqlite_vacuum_full " . 
@@ -14,5 +15,7 @@ RUN GOOS=linux GOARCH=arm64 go build -v -ldflags "-s -w" --tags "sqlite_stat4 sq
 # COPY /bin/sh /bin/sh
 COPY data /data
 COPY fonts /fonts
+
+RUN apk del .build-dependencies
 
 ENTRYPOINT [ "/usr/scratch/rpi-auto-display" ]
