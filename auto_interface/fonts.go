@@ -43,7 +43,7 @@ func (AutoInt *AutoInterface) LoadFonts() {
 			AutoInt.Fonts[fmt.Sprintf("%s-%df", font.Short, int(size))] = truetype.NewFace(ff, &truetype.Options{
 				Size: size,
 			})
-			log.Printf("%+v", AutoInt.Fonts)
 		}
 	}
+	log.Printf("%+v", AutoInt.Fonts)
 }
