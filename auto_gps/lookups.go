@@ -60,7 +60,7 @@ func (Agps *AutoGps) FindNearestTowns(lat float64, lon float64) []string {
 			compass = "SW"
 		case direction <= 292.5:
 			compass = "W"
-		case direction <= 337.5:
+		case direction < 337.5:
 			compass = "NW"
 		default:
 			compass = "N"
