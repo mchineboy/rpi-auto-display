@@ -1,7 +1,7 @@
 FROM golang:alpine AS STAGEONE
 
 WORKDIR /usr/scratch
-RUN apk -U --no-cache add sqlite-libs libspatialite 
+RUN apk -U --no-cache add sqlite libspatialite 
 RUN apk -U --no-cache add --virtual .build libspatialite-dev gcc musl-utils tzdata make binutils dev86 musl-dev
 COPY . .
 RUN chmod 777 -R /tmp && chmod o+t -R /tmp

@@ -44,26 +44,21 @@ func (Agps *AutoGps) FindNearestTowns(lat float64, lon float64) []string {
 		result.Scan(&city, &state, &tz, &distance, &direction)
 
 		direction = direction * 180 / math.Pi
-		compass := ""
-		switch {
-		case direction <= 22.5:
-			compass = "N"
-		case direction < 67.5:
-			compass = "NE"
-		case direction <= 112.5:
-			compass = "E"
-		case direction < 157.5:
-			compass = "SE"
-		case direction <= 202.5:
-			compass = "S"
-		case direction < 247.5:
-			compass = "SW"
-		case direction <= 292.5:
-			compass = "W"
-		case direction < 337.5:
-			compass = "NW"
-		default:
-			compass = "N"
+
+		compassstr := []string{
+			"N", "NbE", "NNE", "NEbN", "NE", "NEbE", "ENE",
+			"EbN", "E", "EbS", "ESE", "SEbE", "SE", "SEbS",
+			"SSE", "SbE", "S", "SbW", "SSW", "SWbS", "SW",
+			"SWbW", "WSW", "WbS", "W", "WbN", "WNW", "NWbW",
+			"NW", "NWbN", "NNW", "NbW",
+		}
+		compass := "N"
+		if direction < 11.25/2 || direction > 11.25/2 {
+			for i, n := range compassstr {
+				if (float64(i+1)*11.25)+5.625 < direction {
+					compass = n
+				}
+			}
 		}
 		if curresult == 0 {
 			Agps.Tz = tz
