@@ -55,7 +55,7 @@ func (Agps *AutoGps) FindNearestTowns(lat float64, lon float64) []string {
 		compass := "N"
 		if direction < 11.25/2 || direction > 11.25/2 {
 			for i, n := range compassstr {
-				if (float64(i+1)*11.25)+5.625 < direction && (float64(i+1)*11.25)-5.625 > direction {
+				if (float64(i+1)*11.25)+5.625 > direction && (float64(i+1)*11.25)-5.625 < direction {
 					compass = n
 					break
 				}
