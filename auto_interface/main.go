@@ -43,6 +43,13 @@ func init() {
 	rpio.Pin(25).Mode(rpio.Output)
 	rpio.Pin(8).Mode(rpio.Output)
 	rpio.Pin(24).Mode(rpio.Input)
+
+	// Red
+	rpio.Pin(13).Mode(rpio.Output)
+	// Green
+	rpio.Pin(19).Mode(rpio.Output)
+	// Blue
+	rpio.Pin(26).Mode(rpio.Output)
 }
 
 func New(Agps *auto_gps.AutoGps) *AutoInterface {
