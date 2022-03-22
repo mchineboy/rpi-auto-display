@@ -34,7 +34,7 @@ var fonts = []FontPack{
 	},
 	{
 		File:  "",
-		Sizes: []float64{10, 11, 12, 14, 16, 36, 48},
+		Sizes: []float64{10, 11, 12, 13, 14, 16, 36, 48},
 		Short: "default",
 	},
 }
