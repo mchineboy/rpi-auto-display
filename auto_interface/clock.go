@@ -9,6 +9,7 @@ import (
 
 func (AutoInt *AutoInterface) DrawClock() {
 
+	
 	AutoInt.Screen.SetFontFace(AutoInt.Fonts["default-13"])
 	loc, _ := time.LoadLocation("Local")
 	currentTime := time.Now().In(loc)
