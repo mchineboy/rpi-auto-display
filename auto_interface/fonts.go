@@ -7,6 +7,7 @@ import (
 
 	"github.com/golang/freetype/truetype"
 	"golang.org/x/image/font"
+	"golang.org/x/image/font/basicfont"
 )
 
 type FontPack struct {
@@ -31,23 +32,47 @@ var fonts = []FontPack{
 		Sizes: []float64{10, 11, 12, 14, 16, 36, 48},
 		Short: "roboto",
 	},
+	{
+		File:  "",
+		Sizes: []float64{10, 11, 12, 14, 16, 36, 48},
+		Short: "default",
+	},
 }
 
 func (AutoInt *AutoInterface) LoadFonts() {
 	AutoInt.Fonts = map[string]font.Face{}
 	for _, font := range fonts {
-		file, err := os.ReadFile(font.File)
-		if err != nil {
-			panic(err)
-		}
-		ff, err := truetype.Parse(file)
-		if err != nil {
-			panic(err)
+		var file []byte
+		var ff *truetype.Font
+		var err error
+		if font.File != "" {
+			file, err = os.ReadFile(font.File)
+			if err != nil {
+				panic(err)
+			}
+			ff, err = truetype.Parse(file)
+			if err != nil {
+				panic(err)
+			}
 		}
 		for _, size := range font.Sizes {
-			AutoInt.Fonts[fmt.Sprintf("%s-%d", font.Short, int(size))] = truetype.NewFace(ff, &truetype.Options{
-				Size: size,
-			})
+			if ff != nil {
+				AutoInt.Fonts[fmt.Sprintf("%s-%d", font.Short, int(size))] = truetype.NewFace(ff, &truetype.Options{
+					Size: size,
+				})
+				continue
+			}
+			fontWidth := (size * 6) / 13
+			AutoInt.Fonts[fmt.Sprintf("%s-%d", font.Short, int(size))] = &basicfont.Face{
+				Advance: int(fontWidth + 1),
+				Width:   int(fontWidth),
+				Height:  int(size),
+				Ascent:  int(size - 2),
+				Descent: 2,
+				Mask:    basicfont.Face7x13.Mask,
+				Ranges:  basicfont.Face7x13.Ranges,
+			}
+
 		}
 	}
 	log.Printf("%+v", AutoInt.Fonts)
