@@ -24,7 +24,7 @@ var fonts = []FontPack{
 	},
 	{
 		File:  "/fonts/race.ttf",
-		Sizes: []float64{10, 11, 12, 14, 16, 36, 48},
+		Sizes: []float64{10, 11, 12, 14, 16, 36, 48, 72},
 		Short: "race",
 	},
 	{
