@@ -1,9 +1,12 @@
 package auto_interface
 
-import "fmt"
+import (
+	"fmt"
+	"image/color"
+)
 
 func (AutoInt *AutoInterface) DrawSpeed() {
-	AutoInt.Screen.SetRGB(0, 0, 0)
+	AutoInt.Screen.SetColor(color.Black)
 
 	AutoInt.Screen.SetFontFace(AutoInt.Fonts["race-36"])
 	AutoInt.Screen.DrawStringAnchored(
