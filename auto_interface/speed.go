@@ -14,4 +14,11 @@ func (AutoInt *AutoInterface) DrawSpeed() {
 	AutoInt.Screen.DrawStringAnchored(
 		fmt.Sprintf("%02d", int(AutoInt.Agps.TPV.Speed*1.609)), 1, (float64(AutoInt.Display.Width-14) * -1), 0.0, 1.0)
 	AutoInt.Screen.Stroke()
+
+	AutoInt.Screen.SetFontFace(AutoInt.Fonts["default-13"])
+	compass := AutoInt.Agps.GetCompassDirection(AutoInt.Agps.TPV.Track)
+	AutoInt.Screen.DrawStringAnchored(
+		fmt.Sprintf("%03s", compass), 0, -15, 0, 0.0,
+	)
+	AutoInt.Screen.Stroke()
 }

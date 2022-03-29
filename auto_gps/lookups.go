@@ -43,24 +43,8 @@ func (Agps *AutoGps) FindNearestTowns(lat float64, lon float64) []string {
 		var direction float64
 		result.Scan(&city, &state, &tz, &distance, &direction)
 
-		direction = direction * 180 / math.Pi
+		compass := Agps.GetCompassDirection(direction)
 
-		compassstr := []string{
-			"N", "NbE", "NNE", "NEbN", "NE", "NEbE", "ENE",
-			"EbN", "E", "EbS", "ESE", "SEbE", "SE", "SEbS",
-			"SSE", "SbE", "S", "SbW", "SSW", "SWbS", "SW",
-			"SWbW", "WSW", "WbS", "W", "WbN", "WNW", "NWbW",
-			"NW", "NWbN", "NNW", "NbW",
-		}
-		compass := "N"
-		if direction < 11.25/2 || direction > 11.25/2 {
-			for i, n := range compassstr {
-				if (float64(i+1)*11.25)+5.625 > direction && (float64(i+1)*11.25)-5.625 < direction {
-					compass = n
-					break
-				}
-			}
-		}
 		if curresult == 0 {
 			Agps.Tz = tz
 			curresult = 1
@@ -71,6 +55,29 @@ func (Agps *AutoGps) FindNearestTowns(lat float64, lon float64) []string {
 	}
 	log.Printf("%+v", cities)
 	return cities
+}
+
+func (Agps *AutoGps) GetCompassDirection(direction float64) string {
+
+	direction = direction * 180 / math.Pi
+
+	compassstr := []string{
+		"N", "NbE", "NNE", "NEbN", "NE", "NEbE", "ENE",
+		"EbN", "E", "EbS", "ESE", "SEbE", "SE", "SEbS",
+		"SSE", "SbE", "S", "SbW", "SSW", "SWbS", "SW",
+		"SWbW", "WSW", "WbS", "W", "WbN", "WNW", "NWbW",
+		"NW", "NWbN", "NNW", "NbW",
+	}
+	compass := "N"
+	if direction < 11.25/2 || direction > 11.25/2 {
+		for i, n := range compassstr {
+			if (float64(i+1)*11.25)+5.625 > direction && (float64(i+1)*11.25)-5.625 < direction {
+				compass = n
+				break
+			}
+		}
+	}
+	return compass
 }
 
 func (Agps *AutoGps) BuildDatabase() {
