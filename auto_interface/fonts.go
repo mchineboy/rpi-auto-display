@@ -19,12 +19,12 @@ type FontPack struct {
 var fonts = []FontPack{
 	{
 		File:  "/fonts/digital.ttf",
-		Sizes: []float64{10, 12, 14, 16, 36, 48},
+		Sizes: []float64{10, 12, 14, 16, 18, 36, 48, 72},
 		Short: "digital",
 	},
 	{
 		File:  "/fonts/race.ttf",
-		Sizes: []float64{10, 11, 12, 14, 16, 36, 48, 72},
+		Sizes: []float64{10, 11, 12, 14, 16, 18, 36, 48, 72},
 		Short: "race",
 	},
 	{
