@@ -19,22 +19,22 @@ type FontPack struct {
 var fonts = []FontPack{
 	{
 		File:  "/fonts/digital.ttf",
-		Sizes: []float64{10, 12, 14, 16, 18, 36, 48, 72},
+		Sizes: []float64{10, 12, 14, 16, 18, 36, 48, 72, 96},
 		Short: "digital",
 	},
 	{
 		File:  "/fonts/race.ttf",
-		Sizes: []float64{10, 11, 12, 14, 16, 18, 36, 48, 72},
+		Sizes: []float64{10, 11, 12, 14, 16, 18, 36, 48, 72, 96},
 		Short: "race",
 	},
 	{
 		File:  "/fonts/roboto.ttf",
-		Sizes: []float64{10, 11, 12, 14, 16, 36, 48},
+		Sizes: []float64{10, 11, 12, 14, 16, 36, 48, 96},
 		Short: "roboto",
 	},
 	{
 		File:  "",
-		Sizes: []float64{10, 11, 12, 13, 14, 16, 36, 48},
+		Sizes: []float64{10, 11, 12, 13, 14, 16, 36, 48, 96},
 		Short: "default",
 	},
 }
