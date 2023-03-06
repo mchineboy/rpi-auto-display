@@ -10,5 +10,5 @@ require (
 	github.com/mattn/go-sqlite3 v2.0.3+incompatible
 	github.com/stianeikeland/go-rpio/v4 v4.6.0
 	go.riyazali.net/epd v0.0.0-20200921164209-84f4fd4927b9
-	golang.org/x/image v0.0.0-20220302094943-723b81ca9867
+	golang.org/x/image v0.5.0
 )
